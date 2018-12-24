@@ -50,13 +50,10 @@ public class Main{
 		for(int i = 1; i < arr.length; i++){
 
 			for(int j = i; j > 0 && arr[j].compareTo(arr[j - 1]) < 0; j--){
-				System.out.println("arr j = " + arr[j] + " arr j - 1 = " + arr[j - 1]);
 				Comparable t = arr[j];
 				arr[j] = arr[j - 1];
 				arr[j - 1] = t;
 			}
-			System.out.println();
-			System.out.println(Arrays.toString(arr));
 		}
 	}
 
@@ -98,17 +95,32 @@ public class Main{
 	}
 
 	public static void msort(Comparable[] arr, int lo, int hi){
-		if(hi <= lo)
+
+		//insertion sort for small arrays
+		if(hi - lo < 7){
+			for(int i = lo; i <= hi; i++)
+				for(int j = i; j > lo && arr[j].compareTo(arr[j - 1]) < 0; j--){
+					Comparable t = arr[j];
+					arr[j] = arr[j - 1];
+					arr[j - 1] = t;
+				}	
 			return;
+		}
+
 		int mid = lo + (hi - lo)/2;
 		msort(arr, lo, mid);
 		msort(arr, mid + 1, hi);
+
+		//oprimizatoin for already sorted parts
+		if(arr[mid].compareTo(arr[mid + 1]) <= 0)
+			return;
+
 		abstractMerge(arr, lo, mid, hi);
 	}
 
 	public static void abstractMerge(Comparable[] arr, int lo, int mid, int hi){
 		int i = lo, j = mid + 1;
-
+		System.out.println("abstractMerge");
 		for(int k = lo; k <= hi; k++){
 			aux[k] = arr[k];
 		}
@@ -125,13 +137,14 @@ public class Main{
 		}
 	}
 
-
 	public static void main(String[] args){
-		Integer[] arr = new Integer[10000];
+		Integer[] arr = new Integer[100];
 		for(int i = 0; i< arr.length; i++)
 			arr[i] = i;
 		mergeSort(arr);
-		
+		for(int i = 0; i < arr.length; i++)
+			System.out.println(arr[i]);
+
 	}
 }
 
