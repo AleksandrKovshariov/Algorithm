@@ -58,15 +58,15 @@ public class Main{
 	}
 
 	public static void improvedInsertionSort(Comparable[] arr){
-		for(int i = 1; i < arr.length; i++){
-			Comparable key = arr[i];
-			int j = i - 1;
-			while(j >= 0 && arr[j].compareTo(key) > 0){
-				arr[j + 1] = arr[j];
-				j--;
+			for(int i = 1; i < arr.length; i++){
+				Comparable key = arr[i];
+				int j = i - 1;
+				while(j >= 0 && arr[j].compareTo(key) > 0){
+					arr[j + 1] = arr[j];
+					j--;
+				}
+				arr[j + 1] = key;
 			}
-			arr[j + 1] = key;
-		}
 	}
 	public static void shellSort(Comparable[] arr){
 		int N = arr.length;
@@ -87,8 +87,44 @@ public class Main{
 		}
 	}
 
+	public static void quickSort(Comparable[] arr){
+		quickHelp(arr, 0, arr.length - 1);
+	}
+
+
+	public static void quickHelp(Comparable[] arr, int lo, int hi){
+		if(lo >= hi)
+			return;
+		int j = partition(arr, lo, hi);
+		quickHelp(arr, lo, j - 1);
+		quickHelp(arr, j + 1, hi);	
+
+	}
+
+	public static int partition(Comparable[] arr, int lo, int hi){
+		int i = lo, j = hi + 1;
+		Comparable v = arr[lo];
+		while(true){
+			while(v.compareTo(arr[++i]) > 0)
+				if(i == hi)
+					break;
+			while(v.compareTo(arr[--j]) < 0)
+				if(j == lo)
+					break;
+			if(i >= j)
+				break;
+			Comparable t = arr[i];
+			arr[i] = arr[j];
+			arr[j] = t;
+		}
+		arr[lo] = arr[j];
+		arr[j]  = v;
+		return j;
+	}
+
 	private static Comparable[] aux;
 	private static int counter = 0;
+	private static final int SIZE_INSERTION = 10;
 	public static void mergeSort(Comparable[] arr){
 		aux = new Comparable[arr.length];
 		msort(arr, 0, arr.length - 1);
@@ -97,7 +133,7 @@ public class Main{
 	public static void msort(Comparable[] arr, int lo, int hi){
 
 		//insertion sort for small arrays
-		if(hi - lo < 7){
+		if(hi - lo < SIZE_INSERTION){
 			for(int i = lo; i <= hi; i++)
 				for(int j = i; j > lo && arr[j].compareTo(arr[j - 1]) < 0; j--){
 					Comparable t = arr[j];
@@ -113,14 +149,14 @@ public class Main{
 
 		//oprimizatoin for already sorted parts
 		if(arr[mid].compareTo(arr[mid + 1]) <= 0)
-			return;
+			return;	
 
 		abstractMerge(arr, lo, mid, hi);
 	}
 
 	public static void abstractMerge(Comparable[] arr, int lo, int mid, int hi){
 		int i = lo, j = mid + 1;
-		System.out.println("abstractMerge");
+
 		for(int k = lo; k <= hi; k++){
 			aux[k] = arr[k];
 		}
@@ -137,13 +173,25 @@ public class Main{
 		}
 	}
 
+	public static void mergeIter(Comparable[] arr){
+		aux = new Comparable[arr.length];
+		int N = arr.length;
+		for(int i = 1; i < N; i = i + i){
+			for (int j = 0; j < N - i; j += i + i) {
+				abstractMerge(arr, j, j + i - 1, Math.min(j + i + i - 1, N - 1));
+			}
+		}
+
+	}
+
 	public static void main(String[] args){
-		Integer[] arr = new Integer[100];
+		Integer[] arr = new Integer[10];
+		Random rnd = new Random();
 		for(int i = 0; i< arr.length; i++)
-			arr[i] = i;
-		mergeSort(arr);
-		for(int i = 0; i < arr.length; i++)
-			System.out.println(arr[i]);
+			arr[i] = Math.abs(rnd.nextInt() % 15);
+		System.out.println(Arrays.toString(arr));
+		quickSort(arr);
+		System.out.println(Arrays.toString(arr));
 
 	}
 }
