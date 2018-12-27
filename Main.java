@@ -57,6 +57,8 @@ public class Main{
 		}
 	}
 
+
+
 	public static void improvedInsertionSort(Comparable[] arr){
 			for(int i = 1; i < arr.length; i++){
 				Comparable key = arr[i];
@@ -68,6 +70,7 @@ public class Main{
 				arr[j + 1] = key;
 			}
 	}
+
 	public static void shellSort(Comparable[] arr){
 		int N = arr.length;
 		int h = 1;
@@ -154,24 +157,45 @@ public class Main{
 		abstractMerge(arr, lo, mid, hi);
 	}
 
+
 	public static void abstractMerge(Comparable[] arr, int lo, int mid, int hi){
-		int i = lo, j = mid + 1;
+		int i = lo;
+		int j = mid + 1;
 
-		for(int k = lo; k <= hi; k++){
-			aux[k] = arr[k];
-		}
-
-		for(int k = lo; k <= hi; k++){
+		for(int k = 0; k <= hi; k++){
 			if(i > mid)
-				arr[k] = aux[j++];
+				aux[k] = arr[j++];
 			else if(j > hi)
-				arr[k] = aux[i++];
-			else if(aux[i].compareTo(aux[j]) > 0)
-				arr[k] = aux[j++];
+				aux[k] = arr[i++];
+			else if(arr[i].compareTo(arr[j]) > 0){
+				aux[k] = arr[j++];
+			}
 			else
-				arr[k] = aux[i++];
+				aux[k] = arr[i++];
 		}
+
+		arr = aux;
+
 	}
+
+	// public static void abstractMerge(Comparable[] arr, int lo, int mid, int hi){
+	// 	int i = lo, j = mid + 1;
+
+	// 	for(int k = lo; k <= hi; k++){
+	// 		aux[k] = arr[k];
+	// 	}
+
+	// 	for(int k = lo; k <= hi; k++){
+	// 		if(i > mid)
+	// 			arr[k] = aux[j++];
+	// 		else if(j > hi)
+	// 			arr[k] = aux[i++];
+	// 		else if(aux[i].compareTo(aux[j]) > 0)
+	// 			arr[k] = aux[j++];
+	// 		else
+	// 			arr[k] = aux[i++];
+	// 	}
+	// }
 
 	public static void mergeIter(Comparable[] arr){
 		aux = new Comparable[arr.length];
@@ -184,17 +208,19 @@ public class Main{
 
 	}
 
+
 	public static void main(String[] args){
 		Integer[] arr = new Integer[10];
 		Random rnd = new Random();
 		for(int i = 0; i< arr.length; i++)
 			arr[i] = Math.abs(rnd.nextInt() % 15);
 		System.out.println(Arrays.toString(arr));
-		quickSort(arr);
+		mergeSort(arr);
 		System.out.println(Arrays.toString(arr));
 
 	}
 }
+
 
 class LinkedStack<T> implements Iterable<T>{
 
