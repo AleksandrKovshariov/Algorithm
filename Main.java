@@ -105,25 +105,21 @@ public class Main{
 	}
 
 	public static int partition(Comparable[] arr, int lo, int hi){
-		int i = lo, j = hi + 1;
-		Comparable v = arr[lo];
-		while(true){
-			while(v.compareTo(arr[++i]) > 0)
-				if(i == hi)
-					break;
-			while(v.compareTo(arr[--j]) < 0)
-				if(j == lo)
-					break;
-			if(i >= j)
-				break;
-			Comparable t = arr[i];
-			arr[i] = arr[j];
-			arr[j] = t;
+		Comparable pivot = arr[hi];
+		int i = lo - 1;
+		for(int j = lo; j < hi; j++){
+			if(pivot.compareTo(arr[j]) > 0){
+				i++;
+				Comparable t = arr[j];
+				arr[j] = arr[i];
+				arr[i] = t;
+			}
 		}
-		arr[lo] = arr[j];
-		arr[j]  = v;
-		return j;
-	}
+		arr[hi] = arr[i+1]; 
+        arr[i+1] = pivot; 
+		return i + 1;
+	} 	
+
 
 	private static Comparable[] aux;
 	private static int counter = 0;
@@ -178,24 +174,6 @@ public class Main{
 
 	}
 
-	// public static void abstractMerge(Comparable[] arr, int lo, int mid, int hi){
-	// 	int i = lo, j = mid + 1;
-
-	// 	for(int k = lo; k <= hi; k++){
-	// 		aux[k] = arr[k];
-	// 	}
-
-	// 	for(int k = lo; k <= hi; k++){
-	// 		if(i > mid)
-	// 			arr[k] = aux[j++];
-	// 		else if(j > hi)
-	// 			arr[k] = aux[i++];
-	// 		else if(aux[i].compareTo(aux[j]) > 0)
-	// 			arr[k] = aux[j++];
-	// 		else
-	// 			arr[k] = aux[i++];
-	// 	}
-	// }
 
 	public static void mergeIter(Comparable[] arr){
 		aux = new Comparable[arr.length];
@@ -215,7 +193,7 @@ public class Main{
 		for(int i = 0; i< arr.length; i++)
 			arr[i] = Math.abs(rnd.nextInt() % 15);
 		System.out.println(Arrays.toString(arr));
-		mergeSort(arr);
+		quickSort(arr);
 		System.out.println(Arrays.toString(arr));
 
 	}
@@ -283,6 +261,7 @@ class LinkedStack<T> implements Iterable<T>{
 		}
 }
 
+
 class LinkedQueue<T> implements Iterable<T>{
 	private Node first;
 	private Node last;
@@ -342,7 +321,6 @@ class LinkedQueue<T> implements Iterable<T>{
 			@Override
 			public boolean hasNext(){
 				return first.next != null;
-
 			}
 		}
 }
@@ -411,4 +389,3 @@ class Stack<T> implements Iterable<T>{
 			}
 		}
 }
-
