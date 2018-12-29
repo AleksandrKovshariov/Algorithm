@@ -192,13 +192,71 @@ public class Main{
 		Random rnd = new Random();
 		for(int i = 0; i< arr.length; i++)
 			arr[i] = Math.abs(rnd.nextInt() % 15);
+		MaxPQ<Integer> queue = new MaxPQ<>(arr.length + 2);
+		for(int i = 0; i< arr.length; i++)
+			queue.insert(arr[i]);
+
 		System.out.println(Arrays.toString(arr));
-		quickSort(arr);
-		System.out.println(Arrays.toString(arr));
+
+		for(int i = 0; i < arr.length; i++){
+			System.out.println(queue.delMax());
+		}
 
 	}
 }
 
+
+class MaxPQ<T extends Comparable<T>>{
+	private int N = 0;
+	private T[] arr;
+
+	public MaxPQ(int max){
+		arr = (T[])new Comparable[max];
+	}
+
+	public void insert(T item){
+		arr[++N] = item;
+		swim(N);
+	}
+
+	public T delMax(){
+		T val = arr[1];
+		T t = arr[1];
+		arr[1] = arr[N];
+		arr[N] = t;
+
+		arr[N] = null;
+		N--;
+		sink(1);
+
+		return val;
+
+	}	
+		
+	private void swim(int k){
+		while(k > 1 && arr[k].compareTo(arr[k/2]) > 0){
+			T t = arr[k];
+			arr[k] = arr[k/2];
+			arr[k/2] = t;
+			k /= 2;
+		}	
+
+	}
+	private void sink(int k){
+		while(2*k <= N ){
+			int j = k * 2;
+			if(j < N && arr[j].compareTo(arr[j + 1]) < 0)
+				j++;
+			if(arr[k].compareTo(arr[j]) > 0)
+				break;
+			T t = arr[k];
+			arr[k] = arr[j];
+			arr[j] = t;
+			k = j;
+		}
+
+	}
+}
 
 class LinkedStack<T> implements Iterable<T>{
 
