@@ -104,22 +104,6 @@ public class Main{
 
 	}
 
-	public static int partition(Comparable[] arr, int lo, int hi){
-		Comparable pivot = arr[hi];
-		int i = lo - 1;
-		for(int j = lo; j < hi; j++){
-			if(pivot.compareTo(arr[j]) > 0){
-				i++;
-				Comparable t = arr[j];
-				arr[j] = arr[i];
-				arr[i] = t;
-			}
-		}
-		arr[hi] = arr[i+1]; 
-        arr[i+1] = pivot; 
-		return i + 1;
-	} 	
-
 
 	private static Comparable[] aux;
 	private static int counter = 0;
@@ -186,20 +170,66 @@ public class Main{
 
 	}
 
+	public static int partition(Comparable[] arr, int lo, int hi){
+		Comparable pivot = arr[hi];
+		int i = lo - 1;
+		for(int j = lo; j < hi; j++){
+			if(pivot.compareTo(arr[j]) >= 0){
+				i++;
+				Comparable t = arr[j];
+				arr[j] = arr[i];
+				arr[i] = t;
+			}
+		}
+		arr[hi] = arr[i+1]; 
+        arr[i+1] = pivot; 
+		return i + 1;
+	} 	
+
+	public static String reverseString(String str){
+		char[] strChar = str.toCharArray();
+        for (int i = 0, j = str.length() - 1; i < j; i++, j--){
+            char t = strChar[i];
+            strChar[i] = strChar[j];
+            strChar[j] = t;
+        }
+        return new String(strChar);
+	}
+
+	public static void sink(Comparable[] arr, int k, int N){
+		while(2*k <= N){
+			int j = 2*k - 1;
+			if(j < N && arr[j].compareTo(arr[j + 1]) < 0)
+				j++;
+			if(arr[k].compareTo(arr[j]) > 0)
+				break;
+			Comparable t = arr[j];
+			arr[j] = arr[k];
+			arr[k] = t;
+			k = j;
+			
+		}
+	}
+
+	public static void binaryHeapSort(Comparable[] arr){
+		int N = arr.length;
+		for(int i = N / 2; i >= 1; i--)
+			sink(arr, i, N);
+		// while(N > 1){
+		// 	Comparable t = arr[1];
+		// 	arr[1] = arr[--N];
+		// 	arr[N] = t;
+		// 	sink(arr, 1, N);
+		// }
+	}
 
 	public static void main(String[] args){
-		Integer[] arr = new Integer[10];
-		Random rnd = new Random();
-		for(int i = 0; i< arr.length; i++)
-			arr[i] = Math.abs(rnd.nextInt() % 15);
-		MaxPQ<Integer> queue = new MaxPQ<>(arr.length + 2);
-		for(int i = 0; i< arr.length; i++)
-			queue.insert(arr[i]);
 
-		System.out.println(Arrays.toString(arr));
+		Integer[] arr = new Integer[]{2,4,8,6,1};
+		binaryHeapSort(arr);
 
 		for(int i = 0; i < arr.length; i++){
-			System.out.println(queue.delMax());
+			System.out.print(arr[i] + ", ");
 		}
 
 	}
@@ -254,6 +284,7 @@ class MaxPQ<T extends Comparable<T>>{
 			arr[j] = t;
 			k = j;
 		}
+
 
 	}
 }
