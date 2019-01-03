@@ -10,20 +10,11 @@ public class Main {
 
         Integer[] arr = new Integer[]{2, 4, 8, 6, 1, 2};
         Character[] arr2 = new Character[]{'a', 'b', 'c', 'c', 'g', 'd'};
-        SequeltialSearch<Integer, Character> seqSearch = new SequeltialSearch<>();
+        BinarySearchST<Integer, Character> seqSearch = new BinarySearchST<>(arr.length);
         IntStream.range(0, arr.length).forEach(x -> seqSearch.put(arr[x], arr2[x]));
-
+        seqSearch.delete(2);
         for (int i = 0; i < arr.length; i++) {
             System.out.print(seqSearch.get(arr[i]));
-        }
-        System.out.println();
-        for (int i = 0; i < arr.length; i++) {
-        	if(seqSearch.contains(arr[i]))
-        		System.out.print(seqSearch.get(arr[i]));
-        }
-        System.out.println();
-        for(Integer k : seqSearch){
-        	System.out.println(k);
         }
     }
 
@@ -122,7 +113,6 @@ public class Main {
         int j = partition(arr, lo, hi);
         quickHelp(arr, lo, j - 1);
         quickHelp(arr, j + 1, hi);
-
     }
 
 
@@ -179,7 +169,6 @@ public class Main {
 
     }
 
-
     public static void mergeIter(Comparable[] arr) {
         aux = new Comparable[arr.length];
         int N = arr.length;
@@ -190,6 +179,7 @@ public class Main {
         }
 
     }
+
 
     public static int partition(Comparable[] arr, int lo, int hi) {
         Comparable pivot = arr[hi];
@@ -217,6 +207,8 @@ public class Main {
         return new String(strChar);
     }
 
+
+
     public static void sink(Comparable[] arr, int k, int N) {
         while (2 * k <= N) {
             int j = 2 * k - 1;
@@ -231,6 +223,7 @@ public class Main {
 
         }
     }
+
 
 }
 
@@ -289,6 +282,64 @@ class MaxPQ<T extends Comparable<T>> {
     }
 }
 
+class BinarySearchST<K extends Comparable<K>, V>{
+    private K[] keys;
+    private V[] values;
+    private int N = 0;
+
+    public BinarySearchST(int size){
+        keys = (K[])new Comparable[size];
+        values = (V[])new Object[size];
+    }
+
+    public void put(K key, V value){
+        int j = rank(key);
+        if(j < N && key.compareTo(keys[j]) == 0){
+            values[j] = value;
+            return;
+        }
+
+        for(int i = N; i > j; i--){
+            keys[i] = keys[i - 1];
+            values[i] = values[i - 1];
+        }
+
+        keys[j] = key; 
+        values[j] = value;
+        N++;
+
+    }
+
+    public V get(K key){
+        int j = rank(key);
+        if(j < N && key.compareTo(keys[j]) == 0)
+            return values[j];
+        return null;
+    }
+
+    public void delete(K key){
+        put(key, null);
+    }
+
+
+    private int rank(K key){
+        int lo = 0;
+        int hi = N - 1;
+
+        while(lo <= hi){
+            int mid = lo + (hi - lo)/2;
+            if(key.compareTo(keys[mid]) > 0)
+                lo = mid + 1;
+            else if(key.compareTo(keys[mid]) < 0)
+                hi = mid - 1;
+            else
+                return mid;
+        }
+        return lo;
+    }
+
+
+}
 
 class SequeltialSearch<K, V> implements Iterable<K>{
 
