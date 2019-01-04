@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.*;
 import java.lang.*;
 import java.util.stream.*;
@@ -7,7 +8,6 @@ import java.util.stream.*;
 public class Main {
 
     public static void main(String[] args) {
-
         Integer[] arr = new Integer[]{2, 4, 8, 6, 1, 2};
         Character[] arr2 = new Character[]{'a', 'b', 'c', 'c', 'g', 'd'};
         BinarySearchST<Integer, Character> seqSearch = new BinarySearchST<>(arr.length);
@@ -26,23 +26,6 @@ public class Main {
         return Evklid(q, r);
     }
 
-
-    public static int binarySearch(int[] arr, int key) {
-        int lo = 0;
-        int hi = arr.length - 1;
-
-        while (lo <= hi) {
-            int mid = lo + (hi - lo) / 2;
-            if (key > arr[mid])
-                lo = mid + 1;
-            else if (key < arr[mid])
-                hi = mid - 1;
-            else
-                return mid;
-        }
-
-        return -1;
-    }
 
     public static void selectionSort(Comparable[] arr) {
         int min;
