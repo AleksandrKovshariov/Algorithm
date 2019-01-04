@@ -1,4 +1,5 @@
 
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
@@ -35,5 +36,17 @@ public class MyRandom {
         int[] randArr = new int[numberOfElements];
         IntStream.range(0, randArr.length).forEach(x -> randArr[x] = rnd.nextInt(from, to));
         return randArr;
+    }
+
+    public int nextInt(int from, int to){
+        return rnd.nextInt(from, to);
+    }
+
+    public int nextInt(int to){
+        return rnd.nextInt(to);
+    }
+
+    public int nextInt(){
+        return rnd.nextInt(0, 100);
     }
 }
