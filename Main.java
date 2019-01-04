@@ -14,7 +14,7 @@ public class Main {
         IntStream.range(0, arr.length).forEach(x -> seqSearch.put(arr[x], arr2[x]));
         seqSearch.delete(2);
         for (int i = 0; i < arr.length; i++) {
-            System.out.print(seqSearch.get(arr[i]));
+            System.out.print(seqSearch.floor(9));
         }
     }
 
@@ -308,6 +308,17 @@ class BinarySearchST<K extends Comparable<K>, V>{
         values[j] = value;
         N++;
 
+    }
+
+    public K ceiling(K key){
+        return keys[rank(key)];
+    }
+    public K floor(K key){
+        int i = rank(key);
+        if(i < N && keys[i].compareTo(key) == 0)
+            return keys[i];
+
+        return i > 0 ? keys[i-1] : null;
     }
 
     public V get(K key){
