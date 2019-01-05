@@ -1,3 +1,4 @@
+package tools;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -9,31 +10,31 @@ public class MyRandom {
     /**
      * Generates int array with random value
      * Values in array are from [0 to 100)
-     * @param numberOfElements defines number of elements used in array
+     * @param size defines number of elements used in array
      */
-    public int[] randomIntArr(int numberOfElements){
-        return  randomIntArr(numberOfElements, 100);
+    public int[] randomIntArr(int size){
+        return  randomIntArr(size, 100);
     }
 
     /**
      * Generates int array with random value
      * Values in array are from 0 to {@code to}
-     * @param numberOfElements defines number of elements used in array
+     * @param size defines number of elements used in array
      * @param to defines excluded max random value used in array
      */
-    public int[] randomIntArr(int numberOfElements, int to){
-        return  randomIntArr(numberOfElements, 0, to);
+    public int[] randomIntArr(int size, int to){
+        return  randomIntArr(size, 0, to);
     }
 
     /**
      * Generates int array with random value
      * Values in array are from {@code from} to {@code to}
-     * @param numberOfElements defines number of elements used in array
+     * @param size defines number of elements used in array
      * @param to defines excluded max random value used in array
      * @param from defines included max random value used in array
      */
-    public int[] randomIntArr(int numberOfElements, int from, int to){
-        int[] randArr = new int[numberOfElements];
+    public int[] randomIntArr(int size, int from, int to){
+        int[] randArr = new int[size];
         IntStream.range(0, randArr.length).forEach(x -> randArr[x] = rnd.nextInt(from, to));
         return randArr;
     }

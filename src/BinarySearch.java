@@ -1,4 +1,5 @@
-import java.lang.reflect.Array;
+import tools.MyRandom;
+
 import java.util.Arrays;
 
 public class BinarySearch {
