@@ -60,10 +60,6 @@ public class Stack<T> implements Iterable<T>{
 
         }
         @Override
-        public void remove(){
-
-        }
-        @Override
         public boolean hasNext(){
             return i > 0;
 

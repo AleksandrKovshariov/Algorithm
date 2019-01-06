@@ -5,6 +5,7 @@ import tools.MyRandom;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 class LinkedStack<T> implements Iterable<T>{
 
@@ -52,10 +53,6 @@ class LinkedStack<T> implements Iterable<T>{
             T item = i.item;
             i = i.next;
             return item;
-
-        }
-        @Override
-        public void remove(){
 
         }
         @Override

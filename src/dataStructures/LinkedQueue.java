@@ -59,10 +59,6 @@ public class LinkedQueue<T> implements Iterable<T>{
             return item;
         }
         @Override
-        public void remove(){
-
-        }
-        @Override
         public boolean hasNext(){
             return first.next != null;
         }
