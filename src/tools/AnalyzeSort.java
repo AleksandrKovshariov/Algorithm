@@ -7,14 +7,14 @@ import java.util.function.Consumer;
  * Very simple testing class for sort algorithm
  */
 public class AnalyzeSort {
-    private Consumer<Comparable[]> sort;
+    private Consumer<Integer[]> sort;
     private MyRandom random = new MyRandom();
 
-    public Consumer<Comparable[]> getSort() {
+    public Consumer<Integer[]> getSort() {
         return sort;
     }
 
-    public void setSort(Consumer<Comparable[]> sort) {
+    public void setSort(Consumer<Integer[]> sort) {
         this.sort = sort;
     }
 
@@ -22,7 +22,7 @@ public class AnalyzeSort {
     public int sizeOfArrays = 10;
     public int testTimeArSize = 10_000_000;
 
-    public static<T extends Comparable> double testTime(T[] array, Consumer<T[]> sortType){
+    public static<T extends Comparable<T>> double testTime(T[] array, Consumer<T[]> sortType){
         StopWatch stopWatch = new StopWatch();
         sortType.accept(array);
         return stopWatch.elapsedTime();
@@ -30,7 +30,7 @@ public class AnalyzeSort {
 
 
 
-    public AnalyzeSort(Consumer<Comparable[]> sort){
+    public AnalyzeSort(Consumer<Integer[]> sort){
         this.sort = sort;
     }
 

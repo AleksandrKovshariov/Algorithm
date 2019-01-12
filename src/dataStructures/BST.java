@@ -64,7 +64,7 @@ public class BST<K extends Comparable<K>, V> {
             node.N = size(node.left) + size(node.right) + 1;
             return node;
         }
-        
+
     public static void main(String[] args) {
         MyRandom random = new MyRandom();
         Integer[] key  = Convert.primitiveArr(random.randomIntArr(10,30));
